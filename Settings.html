@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css"> <!-- You may link your CSS file here -->
 </head>
 <body>
   <div class="container">
@@ -22,31 +22,28 @@
 
   <script>
     function updateSettings(event) {
-      event.preventDefault();
+      event.preventDefault(); // Prevent form submission
       
-      
+      // Get form data
       var name = document.getElementById('name').value;
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
 
-      fetch('update_settings.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: name, email: email, password: password })
-      })
-      .then(response => response.json())
-      .then(data => {
-        
-        console.log(data);
-        alert('Settings updated successfully!');
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
-      });
+      // Store settings in local storage
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+
+      // Show success message
+      alert('Settings updated successfully!');
     }
+
+    // Load saved settings on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('name').value = localStorage.getItem('name') || '';
+      document.getElementById('email').value = localStorage.getItem('email') || '';
+      document.getElementById('password').value = localStorage.getItem('password') || '';
+    });
   </script>
 </body>
 </html>
